@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 const BASE_URL = 'https://www.googleapis.com/books/v1/volumes';
-const API_KEY = process.env.GOOGLE_BOOKS_API_KEY || 'AIzaSyClWtHeJOpsCJA8hL1Z7tFoi1C4llxKu1Q';
+const API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
 
 // API 키 디버깅
 console.log('Environment variables:', {
@@ -21,6 +21,11 @@ export async function GET(request: Request) {
 
   if (!query) {
     return NextResponse.json({ error: 'Query parameter is required' }, { status: 400 });
+  }
+
+  if (!API_KEY) {
+    console.error('API key is not configured');
+    return NextResponse.json({ error: 'API key is not configured' }, { status: 500 });
   }
 
   try {
