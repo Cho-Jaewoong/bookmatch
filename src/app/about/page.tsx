@@ -25,7 +25,6 @@ export default function About() {
               <li>Featured Books: Discover the latest and most popular books</li>
               <li>Recommended Books: Find curated selections based on current trends</li>
               <li>Smart Search: Search for books by title, author, or topic</li>
-              <li>Genre-based Visual Experience: Each book is color-coded by genre for easy identification</li>
             </ul>
           </section>
 
@@ -35,7 +34,6 @@ export default function About() {
               <li>Browse our featured and recommended books on the home page</li>
               <li>Use the search bar to find specific books or topics</li>
               <li>Click on any book to view more details</li>
-              <li>Explore different genres through our color-coded system</li>
             </ol>
           </section>
 
