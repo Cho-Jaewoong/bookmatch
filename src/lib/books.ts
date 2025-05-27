@@ -7,14 +7,9 @@ export interface Book {
   genre: string;
 }
 
-const API_KEY = 'AIzaSyCGo7c8btl4Rqk5AyUB49_av54wuLcQhW4';
-const BASE_URL = 'https://www.googleapis.com/books/v1/volumes';
-
 export async function searchBooks(query: string): Promise<Book[]> {
   try {
-    const response = await fetch(
-      `${BASE_URL}?q=${encodeURIComponent(query)}&key=${API_KEY}&maxResults=8`
-    );
+    const response = await fetch(`/api/books?q=${encodeURIComponent(query)}`);
     
     if (!response.ok) {
       throw new Error('Failed to fetch books');
@@ -42,10 +37,7 @@ export async function searchBooks(query: string): Promise<Book[]> {
 
 export async function getFeaturedBooks(): Promise<Book[]> {
   try {
-    // Featured books are selected based on high ratings and recent publications
-    const response = await fetch(
-      `${BASE_URL}?q=subject:fiction&orderBy=newest&key=${API_KEY}&maxResults=8&langRestrict=en`
-    );
+    const response = await fetch('/api/books?q=subject:fiction&orderBy=newest');
     
     if (!response.ok) {
       throw new Error('Failed to fetch featured books');
@@ -73,9 +65,7 @@ export async function getFeaturedBooks(): Promise<Book[]> {
 
 export async function getRecommendedBooks(): Promise<Book[]> {
   try {
-    const response = await fetch(
-      `${BASE_URL}?q=subject:technology&key=${API_KEY}&maxResults=8&langRestrict=en`
-    );
+    const response = await fetch('/api/books?q=subject:technology');
     
     if (!response.ok) {
       throw new Error('Failed to fetch recommended books');
@@ -126,4 +116,13 @@ export async function getRecommendedBooks(): Promise<Book[]> {
 
 // export function getGenreColor(genre: string): string {
 //   return genreColors[genre] || genreColors.default;
-// } 
+// }
+
+export const fetchBooks = async (query: string) => {
+  const res = await fetch(`/api/books?q=${encodeURIComponent(query)}`);
+  if (!res.ok) {
+    throw new Error('Failed to fetch books');
+  }
+  const data = await res.json();
+  return data;
+}; 
