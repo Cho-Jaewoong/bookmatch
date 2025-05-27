@@ -12,6 +12,8 @@ export async function searchBooks(query: string): Promise<Book[]> {
     const response = await fetch(`/api/books?q=${encodeURIComponent(query)}`);
     
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Search books error:', errorData);
       throw new Error('Failed to fetch books');
     }
 
@@ -40,6 +42,8 @@ export async function getFeaturedBooks(): Promise<Book[]> {
     const response = await fetch('/api/books?q=subject:fiction&orderBy=newest');
     
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Featured books error:', errorData);
       throw new Error('Failed to fetch featured books');
     }
 
@@ -68,6 +72,8 @@ export async function getRecommendedBooks(): Promise<Book[]> {
     const response = await fetch('/api/books?q=subject:technology');
     
     if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Recommended books error:', errorData);
       throw new Error('Failed to fetch recommended books');
     }
 
