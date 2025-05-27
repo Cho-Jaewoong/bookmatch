@@ -39,17 +39,20 @@ export async function searchBooks(query: string): Promise<Book[]> {
 
 export async function getFeaturedBooks(): Promise<Book[]> {
   try {
-    const response = await fetch('/api/books?q=subject:fiction&orderBy=newest');
+    console.log('Fetching featured books...');
+    const response = await fetch('/api/books?q=subject:fiction&orderBy=newest&maxResults=8');
     
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Featured books error:', errorData);
-      throw new Error('Failed to fetch featured books');
+      throw new Error(`Failed to fetch featured books: ${errorData.error || response.statusText}`);
     }
 
     const data = await response.json();
+    console.log('Featured books response:', data);
     
     if (!data.items) {
+      console.log('No items found in featured books response');
       return [];
     }
 
@@ -69,17 +72,20 @@ export async function getFeaturedBooks(): Promise<Book[]> {
 
 export async function getRecommendedBooks(): Promise<Book[]> {
   try {
-    const response = await fetch('/api/books?q=subject:technology');
+    console.log('Fetching recommended books...');
+    const response = await fetch('/api/books?q=subject:technology&maxResults=8');
     
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Recommended books error:', errorData);
-      throw new Error('Failed to fetch recommended books');
+      throw new Error(`Failed to fetch recommended books: ${errorData.error || response.statusText}`);
     }
 
     const data = await response.json();
+    console.log('Recommended books response:', data);
     
     if (!data.items) {
+      console.log('No items found in recommended books response');
       return [];
     }
 
